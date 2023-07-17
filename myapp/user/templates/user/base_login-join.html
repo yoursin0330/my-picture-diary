@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}
+        {{ title }}
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="myapp/templates/css/common.css">
+    <link rel="stylesheet" href="./css/login-join.css">
+  </head>
+
+  <body>
+    <!-- header -->
+    <div class="header">
+      <h1>
+        <a href="/">My Picture Diary</a>
+      </h1>
+      <div class="header-click">
+        <a href="{% url 'user:login' %}">로그인</a>
+        <a href="{% url 'user:register' %}">회원가입</a>
+      </div>
+    </div>
+    <!-- // header -->
+
+    <div class="main">
+      <div class="container">
+        <p class="description">이메일과 비밀번호를 입력하고 로그인하세요</p>
+        {% block content %}{% endblock %}
+
+        <!-- footer -->
+        <p class="footer">Copyright 2023. My Picture Diary🔖 All rights reserved.</p>
+        <!-- //footer -->
+      </body>
+
+    </html>

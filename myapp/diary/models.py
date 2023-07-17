@@ -17,7 +17,7 @@ class Post(models.Model):
     date = models.DateField(auto_now_add=True)
     content = models.TextField()
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to=None, height_field=400, width_field=400, null=True)
+    # picture = models.ImageField(upload_to=None, height_field=400, width_field=400, null=True)
     mood = models.IntegerField(choices=MOOD_CHOICES)
     
 
