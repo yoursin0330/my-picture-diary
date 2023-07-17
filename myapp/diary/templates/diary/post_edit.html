@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form action="{% url 'diary:edit' pk=post.pk %} " method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn" value="수정">
+  </form>
+{% endblock %}

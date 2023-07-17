@@ -10,7 +10,7 @@ class RegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['email']
+        fields = ['username', 'email']
 
 
 class LoginForm(AuthenticationForm):
@@ -18,4 +18,4 @@ class LoginForm(AuthenticationForm):
 
     class Meta:
         model = User
-        fields = ['email', 'password']
+        fields = ['username', 'password']

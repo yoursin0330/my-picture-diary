@@ -5,13 +5,14 @@ from django.utils import timezone
 
 class UserManager(BaseUserManager):
     
-    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, email,username, password, is_staff, is_superuser, **extra_fields):
         if not email:
             raise ValueError('User must have an email')
         now = timezone.localtime()
         email = self.normalize_email(email)
         user = self.model(
             email=email,
+            username=username,
             is_staff=is_staff,
             is_active=True,
             is_superuser=is_superuser,
@@ -23,11 +24,11 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     # create_user
-    def create_user(self, email, password, **extra_fields):
-        return self._create_user(email, password, False, False, **extra_fields)
+    def create_user(self, email,username, password, **extra_fields):
+        return self._create_user(email, username, password, False, False, **extra_fields)
     # create_superuser
-    def create_superuser(self, email, password, **extra_fields):
-        return self._create_user(email, password, True, True, **extra_fields)
+    def create_superuser(self, email, username, password, **extra_fields):
+        return self._create_user(email, username, password, True, True, **extra_fields)
 
 
 class User(AbstractUser):
@@ -39,8 +40,8 @@ class User(AbstractUser):
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS =[]
+    REQUIRED_FIELDS =[username, email]
 
     objects = UserManager()

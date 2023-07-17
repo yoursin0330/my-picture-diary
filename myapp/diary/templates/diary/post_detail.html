@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ post_date }}의 일기</h2>
+  <h4>제목 :
+    {{ post_title }}</h4>
+  <p>작성자 :
+    {{ post_writer }}</p>
+  <p>기분 :
+    {{ post_mood }}</p>
+  <p>{{ post_content }}</p>
+
+  {% if post_writer == request.user %}
+    <form action="{% url 'diary:delete' pk=post_id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="삭제">
+    </form>
+  {% endif %}
+{% endblock %}
