@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form action="{% url 'diary:write' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="btn">
-    </form>
+  <canvas id="canvas" width="480" height="320"></canvas>
+  <form action="{% url 'diary:write' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn">
+  </form>
 {% endblock %}
