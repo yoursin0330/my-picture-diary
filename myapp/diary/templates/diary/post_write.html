@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <canvas id="canvas" width="480" height="320"></canvas>
   <form action="{% url 'diary:write' %}" method="post">
     {% csrf_token %}
+    {% include 'diary/canvas.html' %}
     {{ form.as_p }}
     <input type="submit" class="btn">
   </form>

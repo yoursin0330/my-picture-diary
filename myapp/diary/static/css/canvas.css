@@ -1,0 +1,12 @@
+canvas {
+    background:white;
+    display: block;
+    margin:0 auto;
+    border: 1px black solid;
+}
+.color-btn{
+    width: 20px; 
+    height: 20px; 
+    border: solid 0.5px black;
+    border-radius: 20px;
+}

@@ -4,8 +4,22 @@ var pos = {
     y : -1,
 };
 var canvas = document.getElementById('canvas');
+var brushSize = document.getElementById('brush_size')
 var ctx = canvas.getContext('2d');
 var rect = canvas.getBoundingClientRect();  // 터치 스크린
+
+// 전체 지우기
+function clearAll(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// 스타일 추가
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+
+function colorChange(color){
+    ctx.strokeStyle = color;
+} 
 
 canvas.addEventListener("mousedown", listener);
 canvas.addEventListener("mousemove", listener);
@@ -17,14 +31,20 @@ canvas.addEventListener("touchstart", listener);
 canvas.addEventListener("touchmove", listener);
 canvas.addEventListener("touchend", listener);
 
+//브러쉬 사이즈 
+brushSize.addEventListener("input",function(){
+    ctx.lineWidth = brushSize.value;
+})
+
 function listener(e){
     switch(e.type){
         case "mousedown":
             drawStart(e);
             break;
         case "mousemove":
-            if(pos.drawable)
+            if(pos.drawable){
                 draw(e);
+            }
             break;
         case "mouseout":
         case "mouseup":

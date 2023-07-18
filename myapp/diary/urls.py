@@ -24,4 +24,5 @@ urlpatterns = [
     # 댓글 수정
     # path("detail/<int:pk>/comment/edit/",
     #      views.CommentEdit.as_view(), name="cm-edit")
+
 ]
