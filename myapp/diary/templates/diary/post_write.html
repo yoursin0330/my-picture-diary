@@ -6,6 +6,6 @@
     {% csrf_token %}
     {% include 'diary/canvas.html' %}
     {{ form.as_p }}
-    <input type="제출" class="btn">
+    <input type="submit" value="제출" class="btn">
   </form>
 {% endblock %}
