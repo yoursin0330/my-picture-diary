@@ -3,6 +3,7 @@
 {% block content %}
   <form action="{% url 'diary:edit' pk=post.pk %} " method="post">
     {% csrf_token %}
+    {% include 'diary/canvas.html' %}
     {{ form.as_p }}
     <input type="submit" class="btn" value="수정">
   </form>
