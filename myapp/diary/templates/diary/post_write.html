@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <form action="{% url 'diary:pt-' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="그림 저장" class="btn">
+  </form>
   <form action="{% url 'diary:write' %}" method="post">
     {% csrf_token %}
-    {% include 'diary/canvas.html' %}
     {{ form.as_p }}
-    <input type="submit" class="btn">
+    <input type="제출" class="btn">
   </form>
 {% endblock %}
