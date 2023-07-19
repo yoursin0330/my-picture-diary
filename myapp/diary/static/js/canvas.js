@@ -1,13 +1,14 @@
-var pos = {
+const pos = {
     drawable : false,
     x : -1,
     y : -1,
 };
-var canvas = document.getElementById('canvas');
-var brushSize = document.getElementById('brush_size')
-var ctx = canvas.getContext('2d');
-var rect = canvas.getBoundingClientRect();  // 터치 스크린
+const canvas = document.getElementById('canvas');
+const brushSize = document.getElementById('brush_size')
+const ctx = canvas.getContext("2d");
+const rect = canvas.getBoundingClientRect();  // 터치 스크린
 
+const postFormBtn = document.querySelector(".post-form .postform-submit");
 // 전체 지우기
 function clearAll(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -20,7 +21,6 @@ ctx.lineJoin = 'round';
 function colorChange(color){
     ctx.strokeStyle = color;
 } 
-
 canvas.addEventListener("mousedown", listener);
 canvas.addEventListener("mousemove", listener);
 canvas.addEventListener("mouseup", listener);
@@ -31,11 +31,15 @@ canvas.addEventListener("touchstart", listener);
 canvas.addEventListener("touchmove", listener);
 canvas.addEventListener("touchend", listener);
 
+postFormBtn.addEventListener("onclick", savePainting)
 //브러쉬 사이즈 
 brushSize.addEventListener("input",function(){
     ctx.lineWidth = brushSize.value;
 })
 
+function savePainting(){
+    const imageURL = canvas.toDataURL();
+}
 function listener(e){
     switch(e.type){
         case "mousedown":
