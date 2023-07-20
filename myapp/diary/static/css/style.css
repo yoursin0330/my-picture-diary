@@ -1,1 +1,8 @@
+@import url("post.css");
 @import url("canvas.css");
+@import url("postform.css");
+
+h1{
+    background-color: #bad3cb;
+    color: black;
+}

@@ -1,12 +1,27 @@
 canvas {
     background:white;
-    display: block;
     margin:0 auto;
     border: 1px black solid;
+    /* width: 480px; */
+    /* height: 320px; */
+
+}
+.brush-container input[type="number"]::-webkit-outer-spin-button,
+.brush-container input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.brush-container input[type="number"]{
+	width: 40px;
+    border: 0.3px solid gray;
+    border-radius: 7px;
+    text-align: center;
+}
+.brush-container button{
+    border: 0.3px solid gray;
+    border-radius: 7px;
 }
 .color-btn{
     width: 20px; 
     height: 20px; 
-    border: solid 0.5px black;
-    border-radius: 20px;
 }

@@ -7,6 +7,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
 from django.template.defaulttags import register
+
+import base64
+import logging
+logger = logging.getLogger('django')
 # Create your views here.
 
 # Post
@@ -25,18 +29,27 @@ class ListView(View):
 
 class Write(View):
     def get(self, request):
-        form = PostForm()
+        # form = PostForm()
         context = {
-            'form': form,
+            # 'form': form,
             'title': "오늘의 일기"
         }
         return render(request, 'diary/post_write.html', context)
 
     def post(self, request):
-        form = PostForm(request.POST)
+        logger.info("ㅋㅋ줘털림")
+        # form = PostForm(request.POST.data)
+        form = request.POST.data
+        logger.info(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.writer = request.user
+            data = request.POST.data.__getitem__('data')
+            logger.info(data)
+            data = data[22:]  # 앞의 헤더 제거
+
+            img = base64.b64decode(data)
+            post.painting = img
             post.save()
             return redirect('diary:detail', pk=post.pk)
         form.add_error(None, '입력이 유효하지 않습니다!')
@@ -71,6 +84,7 @@ class Detail(View):
             'post_date': post.date,
             'post_writer': post.writer,
             'post_mood': get_mood_icon(post.mood),
+            'post_painting': post.painting,
             'post_content': post.content,
             'comments': comments,
             'comment_form': comment_form,

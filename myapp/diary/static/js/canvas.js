@@ -31,14 +31,34 @@ canvas.addEventListener("touchstart", listener);
 canvas.addEventListener("touchmove", listener);
 canvas.addEventListener("touchend", listener);
 
-postFormBtn.addEventListener("onclick", savePainting)
+postFormBtn.addEventListener("onclick", savePost)
 //브러쉬 사이즈 
 brushSize.addEventListener("input",function(){
     ctx.lineWidth = brushSize.value;
 })
 
-function savePainting(){
+function savePost(){
+    var form = $(".post-form")[0]
+    var form_data = new FormData(form)
     const imageURL = canvas.toDataURL();
+    $.ajax({
+        type : "POST",
+        url:"{% url 'diary:write' %}",
+        async : true,
+        data : {
+            title : $("#id_title").val(),
+            content : $("#id_content").val(),
+            imgURL: imageURL,
+            mood: $("#id_mood").val()
+        },
+        success : function(result){
+            console.log(result)
+            console.log(imageURL)
+        },
+        error : function(request, status, error){
+            console.log(error)
+        }
+    })
 }
 function listener(e){
     switch(e.type){

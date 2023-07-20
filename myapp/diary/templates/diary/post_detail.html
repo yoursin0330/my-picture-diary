@@ -7,6 +7,7 @@
     {{ post_writer }}</p>
   <p>기분 :
     {{ post_mood }}</p>
+  <!-- <img src="{{ post_painting }}"> -->
   <p>{{ post_content }}</p>
 
   {% if post_writer == request.user %}
@@ -20,28 +21,30 @@
   <h3>댓글</h3>
   <form action="{% url 'diary:cm-write' pk=post_id %}" method="post">
     {% csrf_token %}
-    {% if comment_form.errors %}
-      {% with form=comment_form %}
+    <!-- {% if comment_form.errors %}
+      {% with form = comment_form %}
         {% include 'diary/form_error.html' %}
       {% endwith %}
-    {% else %}
+    {% else %} -->
       {{ comment_form.content }}
-    {% endif %}
+    <!-- {% endif %} -->
     <input type="submit" value="댓글 작성">
   </form>
 
   {% if comments %}
     <ul>
       {% for comment in comments %}
-      <li>{{ comment.content }}
-        <span> - {{ comment.writer }}</span>
-        {% if comment.writer == request.user %}
-          <form action="{% url 'diary:cm-delete' pk=comment.pk %}" method ="post">
-            {% csrf_token %}
-            <input type="submit" value="x" class="btn">
-          </form>
-        {% endif %}
-      </li>
+        <li>{{ comment.content }}
+          <span>
+            -
+            {{ comment.writer }}</span>
+          {% if comment.writer == request.user %}
+            <form action="{% url 'diary:cm-delete' pk=comment.pk %}" method="post">
+              {% csrf_token %}
+              <input type="submit" value="x" class="btn">
+            </form>
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
   {% else %}

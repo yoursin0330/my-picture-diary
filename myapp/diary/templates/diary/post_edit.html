@@ -3,27 +3,28 @@
 {% block content %}
   <form class="post-form" action="{% url 'diary:edit' pk=post.pk %} " method="post">
     {% csrf_token %}
-    <form class="post-form" action="{% url 'diary:write' %}" method="post">
-      {% csrf_token %}
-      <container class="canvas-container">
-        <div class="brush-container">
-          <label for="brush_size">브러쉬 크기</label>
-          <input id="brush_size" type="number" min="1" max="100" value="5"></input>
-          <button class="color-btn" onclick="colorChange('black')" style="background-color: black; "></button>
-          <button class="color-btn" onclick="colorChange('blue')" style="background-color: blue; "></button>
-          <button class="color-btn" onclick="colorChange('red')" style="background-color: red; "></button>
-          <button class="color-btn" onclick="colorChange('green')" style="background-color: green; "></button>
-          <button class="color-btn" onclick="colorChange('pink')" style="background-color: pink; "></button>
-          <button class="color-btn" onclick="colorChange('yellow')" style="background-color: yellow; "></button>
-          <button class="color-btn" onclick="colorChange('skyblue')" style="background-color: skyblue; "></button>
-          <button class="color-btn" onclick="colorChange('violet')" style="background-color: violet; "></button>
-          <button class="color-btn" onclick="colorChange('lime')" style="background-color: lime; "></button>
-          <button class="color-btn" onclick="colorChange('white')" style="background-color: white; "></button>
-          <button onclick="colorChange('white')">지우개</button>
-          <button onclick="clearAll()">전체지우기</button>
-        </div>
-        {{ form.as_p }}
-        <input type="submit" class="btn" value="수정">
-      </form>
-      <script src="/static/js/canvas.js"></script>
-    {% endblock %}
+    <container class="canvas-container">
+      <div class="brush-container">
+        <label for="brush_size">브러쉬 크기</label>
+        <input id="brush_size" type="number" min="1" max="100" value="5"></input>
+        <button class="color-btn" onclick="colorChange('black')" style="background-color: black; "></button>
+        <button class="color-btn" onclick="colorChange('blue')" style="background-color: blue; "></button>
+        <button class="color-btn" onclick="colorChange('red')" style="background-color: red; "></button>
+        <button class="color-btn" onclick="colorChange('green')" style="background-color: green; "></button>
+        <button class="color-btn" onclick="colorChange('pink')" style="background-color: pink; "></button>
+        <button class="color-btn" onclick="colorChange('yellow')" style="background-color: yellow; "></button>
+        <button class="color-btn" onclick="colorChange('skyblue')" style="background-color: skyblue; "></button>
+        <button class="color-btn" onclick="colorChange('violet')" style="background-color: violet; "></button>
+        <button class="color-btn" onclick="colorChange('lime')" style="background-color: lime; "></button>
+        <button class="color-btn" onclick="colorChange('white')" style="background-color: white; "></button>
+        <button onclick="colorChange('white')">지우개</button>
+        <button onclick="clearAll()">전체지우기</button>
+      </div>
+      <canvas id="canvas" width="480" height="320"></canvas>
+    </container>
+    {{ form.as_p }}
+    <input type="submit" class="btn" value="수정">
+  </form>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="/static/js/canvas.js"></script>
+{% endblock %}

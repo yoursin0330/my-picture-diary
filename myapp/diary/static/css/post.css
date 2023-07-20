@@ -1,0 +1,15 @@
+/* post_edit, post_detail, post_write 페이지의 레이아웃 */
+.post-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.postform-content{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    align-items: center;
+}
+.canvas-container{
+    padding:10px;
+}
