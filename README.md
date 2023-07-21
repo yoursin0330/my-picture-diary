@@ -50,7 +50,8 @@
 ![일기 리스트](image-1.png)
 ![게시글 상세 페이지](image-2.png)
 ![게시물 작성](image-6.png)
-![게시물 작성 텍스트](image-7.png)
+![게시물 작성 텍스트](https://github.com/yoursin0330/my-picture-diary/assets/103302201/ac518023-308b-4a79-affa-392a9398109c)
+
 
 ## 아쉬웠던 점
 
