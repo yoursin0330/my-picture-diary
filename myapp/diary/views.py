@@ -97,7 +97,7 @@ class Update(View):
         context = {
             'form': form,
             'post': post,
-            'title': (str)(post.date) + '의 일기'
+            'title': post.date
         }
         return render(request, 'diary/post_edit.html', context)
 
@@ -111,7 +111,7 @@ class Update(View):
 
             post.save()
             return redirect('diary:detail', pk=pk)
-        form.add_error('입력이 유효하지 않습니다.')
+        # form.add_error(None, '입력이 유효하지 않습니다.')
         context = {
             'form': form,
             'title': '일기'

@@ -2,29 +2,55 @@
 
 {% block content %}
 
-  <form class="post-form" action="{% url 'diary:write' %}" method="post">
+  <form class="post-form" action="{% url 'diary:write' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <container class="canvas-container">
-      <div class="brush-container">
-        <label for="brush_size">브러쉬 크기</label>
-        <input id="brush_size" type="number" min="1" max="100" value="5"></input>
-        <button class="color-btn" onclick="colorChange('black')" style="background-color: black; "></button>
-        <button class="color-btn" onclick="colorChange('blue')" style="background-color: blue; "></button>
-        <button class="color-btn" onclick="colorChange('red')" style="background-color: red; "></button>
-        <button class="color-btn" onclick="colorChange('green')" style="background-color: green; "></button>
-        <button class="color-btn" onclick="colorChange('pink')" style="background-color: pink; "></button>
-        <button class="color-btn" onclick="colorChange('yellow')" style="background-color: yellow; "></button>
-        <button class="color-btn" onclick="colorChange('skyblue')" style="background-color: skyblue; "></button>
-        <button class="color-btn" onclick="colorChange('violet')" style="background-color: violet; "></button>
-        <button class="color-btn" onclick="colorChange('lime')" style="background-color: lime; "></button>
-        <button class="color-btn" onclick="colorChange('white')" style="background-color: white; "></button>
-        <button onclick="colorChange('white')">지우개</button>
-        <button onclick="clearAll()">전체지우기</button>
-      </div>
-      <canvas id="canvas" width="480" height="320"></canvas>
-    </container>
-    {{ form.as_p }}
-    <input type="submit" value="제출" class="btn postform-submit">
+    <div class="postform-content">
+      <container class="canvas-container">
+        <div class="brush-container">
+          <button class="color-btn" onclick="colorChange('black')" style="background-color: black; "></button>
+          <button class="color-btn" onclick="colorChange('blue')" style="background-color: blue; "></button>
+          <button class="color-btn" onclick="colorChange('red')" style="background-color: red; "></button>
+          <button class="color-btn" onclick="colorChange('green')" style="background-color: green; "></button>
+          <button class="color-btn" onclick="colorChange('pink')" style="background-color: pink; "></button>
+          <button class="color-btn" onclick="colorChange('yellow')" style="background-color: yellow; "></button>
+          <button class="color-btn" onclick="colorChange('skyblue')" style="background-color: skyblue; "></button>
+          <button class="color-btn" onclick="colorChange('violet')" style="background-color: violet; "></button>
+          <button class="color-btn" onclick="colorChange('lime')" style="background-color: lime; "></button>
+          <button class="color-btn" onclick="colorChange('white')" style="background-color: white; "></button>
+          <br/>
+          <label for="brush_size">브러쉬 크기</label>
+          <input id="brush_size" type="number" min="1" max="100" value="5"></input>
+          <button onclick="colorChange('white')">지우개</button>
+          <button onclick="clearAll()">전체지우기</button>
+        </div>
+        <canvas id="canvas" width="480" height="320"></canvas>
+      </container>
+      <container class="text-container">
+        <p>
+          <label for="id_title">Title:</label>
+          <input type="text" name="title" maxlength="30" required="" id="id_title">
+        </p>
+
+        <p>
+          <label for="id_mood">Mood:</label>
+          <select name="mood" required="" id="id_mood">
+            <option value="" selected="">---------</option>
+            <option value="5">❤️❤️❤️❤️❤️</option>
+            <option value="4">💛💛💛💛</option>
+            <option value="3">💚💚💚</option>
+            <option value="2">💙💙</option>
+            <option value="1">💜</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="id_content">Content:</label>
+          <textarea name="content" cols="40" rows="10" required="" id="id_content"></textarea>
+        </p>
+      </container>
+    </div>
+    <input type="submit" value="제출" class="btn postform-submit w-btn w-btn-green">
   </form>
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script src="/static/js/canvas.js"></script>
 {% endblock %}
