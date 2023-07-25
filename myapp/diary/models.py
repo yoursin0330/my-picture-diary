@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from django_base64field.fields import Base64Field
+
 User = get_user_model()
 MOOD_CHOICES = {
     (5, '❤️❤️❤️❤️❤️'),
@@ -18,8 +20,7 @@ class Post(models.Model):
     date = models.DateField(auto_now_add=True)
     content = models.TextField()
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
-    painting = models.ImageField(
-        upload_to="", width_field=480, height_field=320)
+    painting = Base64Field(max_length=900000, blank=True, null=True)
     mood = models.IntegerField(choices=MOOD_CHOICES)
 
 

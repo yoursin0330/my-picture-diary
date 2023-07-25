@@ -71,6 +71,7 @@ $('.post-form').on('submit', function(e){
     e.preventDefault();
     console.log("form submitted")
     createPost();
+    $('.post-form').unbind();
     
 })
 function createPost(){
@@ -79,9 +80,6 @@ function createPost(){
     $.ajax({
         url:'/diary/write/',
         type : "POST",
-        // headers: {
-        //     'X-CSRFTOKEN' : '{{ csrf_token }}'
-        // },
         data : { // post request로 data 보내기
             title : $("#id_title").val(),
             content : $("#id_content").val(),
@@ -90,9 +88,7 @@ function createPost(){
             
         },
         success : function(){
-            $('#id_title').val(' ');
             console.log("success")
-            console.log("imageURL")
         },
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
@@ -100,30 +96,8 @@ function createPost(){
             console.log(err, errmsg, xhr)
         }
     })
-    
-
-    //  var form = $(".post-form")[0]
-    // var form_data = new FormData(form)
-    // const imageURL = canvas.toDataURL();
-    // $.ajax({
-    //     type : "POST",
-    //     url:"{% url 'diary:write' %}",
-    //     async : true,
-    //     data : {
-    //         title : $("#id_title").val(),
-    //         content : $("#id_content").val(),
-    //         imgURL: imageURL,
-    //         mood: $("#id_mood").val()
-    //     },
-    //     success : function(result){
-    //         console.log(result)
-    //         console.log(imageURL)
-    //     },
-    //     error : function(request, status, error){
-    //         console.log(error)
-    //     }
-    // })
 }
+
 function listener(e){
     switch(e.type){
         case "mousedown":

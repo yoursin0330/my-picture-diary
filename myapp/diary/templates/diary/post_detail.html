@@ -7,7 +7,7 @@
     {{ post_writer }}</p>
   <p>기분 :
     {{ post_mood }}</p>
-  <!-- <img src="{{ post_painting }}"> -->
+  <img src="{{ post_painting }}" alt="그림">
   <p>{{ post_content }}</p>
 
   {% if post_writer == request.user %}
@@ -21,13 +21,7 @@
   <h3>댓글</h3>
   <form action="{% url 'diary:cm-write' pk=post_id %}" method="post">
     {% csrf_token %}
-    <!-- {% if comment_form.errors %}
-      {% with form = comment_form %}
-        {% include 'diary/form_error.html' %}
-      {% endwith %}
-    {% else %} -->
-      {{ comment_form.content }}
-    <!-- {% endif %} -->
+    {{ comment_form.content }}
     <input type="submit" value="댓글 작성">
   </form>
 
