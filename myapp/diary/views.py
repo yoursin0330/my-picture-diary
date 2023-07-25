@@ -9,6 +9,14 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.template.defaulttags import register
 
 import base64
+import io
+# from PIL import Image
+# from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.base import ContentFile
+from rest_framework import serializers
+
+
+# 로그 남기기
 import logging
 logger = logging.getLogger('django')
 # Create your views here.
@@ -27,6 +35,28 @@ class ListView(View):
         return render(request, 'diary/post_list.html', context)
 
 
+# def decodeDesignImage(imageURL):  # B64 -> PIL 이미지 변환
+#     try:
+#         data = base64.b64decode(data.encode('UTF-8'))
+#         buf = io.BytesIO(data)
+#         img = Image.open(buf)
+#         return img
+#     except:
+#         logger.info("이미지 변환 실패")
+#         return None
+
+class Base64ImageField(serializers.ImageField):
+    def from_native(self, data):
+        if isinstance(data, basestring) and data.startswith('data:image'):
+            # base64 encoded image - decode
+            format, imgstr = data.split(';base64,')  # format ~= data:image/X,
+            ext = format.split('/')[-1]  # guess file extension
+
+            data = ContentFile(base64.b64decode(imgstr), name='temp.' + ext)
+
+        return super(Base64ImageField, self).from_native(data)
+
+
 class Write(View):
     def get(self, request):
         # form = PostForm()
@@ -37,26 +67,47 @@ class Write(View):
         return render(request, 'diary/post_write.html', context)
 
     def post(self, request):
-        logger.info("ㅋㅋ줘털림")
-        # form = PostForm(request.POST.data)
-        form = request.POST.data
-        logger.info(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.writer = request.user
-            data = request.POST.data.__getitem__('data')
-            logger.info(data)
-            data = data[22:]  # 앞의 헤더 제거
-
-            img = base64.b64decode(data)
-            post.painting = img
-            post.save()
-            return redirect('diary:detail', pk=post.pk)
-        form.add_error(None, '입력이 유효하지 않습니다!')
+        logger.info("views.py입니다")
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        imgURL = request.POST.get('imgURL')
+        logger.info(imgURL)
+        img = Base64ImageField(imgURL)
+        img.save(img, format='png')
+        mood = request.POST.get('mood')
+        post = Post(title=title, content=content,
+                    writer=request.user, painting=img, mood=mood)
+        post.save()
         context = {
-            'form': form
+            'post_date': post.date,
+            'post_title': post.title,
+            'post_writer': post.writer,
+            'post_mood': post.mood,
+            'post_content': post.content,
+            'post_painting': post.painting
         }
+
         return render(request, 'diary/post_write.html', context)
+
+        # form = PostForm(request.POST.data)
+        # form = request.POST.data
+        # logger.info(request.POST)
+        # if form.is_valid():
+        #     post = form.save(commit=False)
+        #     post.writer = request.user
+        #     data = request.POST.data.__getitem__('data')
+        #     logger.info(data)
+        #     data = data[22:]  # 앞의 헤더 제거
+
+        #     img = base64.b64decode(data)
+        #     post.painting = img
+        #     post.save()
+        #     return redirect('diary:detail', pk=post.pk)
+        # form.add_error(None, '입력이 유효하지 않습니다!')
+        # context = {
+        #     'form': form
+        # }
+        # return render(request, 'diary/post_write.html', context)
 
 
 @register.filter

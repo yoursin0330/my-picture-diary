@@ -1,3 +1,34 @@
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+
 const pos = {
     drawable : false,
     x : -1,
@@ -8,7 +39,6 @@ const brushSize = document.getElementById('brush_size')
 const ctx = canvas.getContext("2d");
 const rect = canvas.getBoundingClientRect();  // 터치 스크린
 
-const postFormBtn = document.querySelector(".post-form .postform-submit");
 // 전체 지우기
 function clearAll(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -31,34 +61,68 @@ canvas.addEventListener("touchstart", listener);
 canvas.addEventListener("touchmove", listener);
 canvas.addEventListener("touchend", listener);
 
-postFormBtn.addEventListener("onclick", savePost)
+// postFormBtn.addEventListener("onclick", savePost)
 //브러쉬 사이즈 
 brushSize.addEventListener("input",function(){
     ctx.lineWidth = brushSize.value;
 })
 
-function savePost(){
-    var form = $(".post-form")[0]
-    var form_data = new FormData(form)
+$('.post-form').on('submit', function(e){
+    e.preventDefault();
+    console.log("form submitted")
+    createPost();
+    
+})
+function createPost(){
+    console.log("create post is working..!")
     const imageURL = canvas.toDataURL();
     $.ajax({
+        url:'/diary/write/',
         type : "POST",
-        url:"{% url 'diary:write' %}",
-        async : true,
-        data : {
+        // headers: {
+        //     'X-CSRFTOKEN' : '{{ csrf_token }}'
+        // },
+        data : { // post request로 data 보내기
             title : $("#id_title").val(),
             content : $("#id_content").val(),
             imgURL: imageURL,
-            mood: $("#id_mood").val()
+            mood: $("#id_mood").val(),
+            
         },
-        success : function(result){
-            console.log(result)
-            console.log(imageURL)
+        success : function(){
+            $('#id_title').val(' ');
+            console.log("success")
+            console.log("imageURL")
         },
-        error : function(request, status, error){
-            console.log(error)
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            console.log("error on js")
+            console.log(err, errmsg, xhr)
         }
     })
+    
+
+    //  var form = $(".post-form")[0]
+    // var form_data = new FormData(form)
+    // const imageURL = canvas.toDataURL();
+    // $.ajax({
+    //     type : "POST",
+    //     url:"{% url 'diary:write' %}",
+    //     async : true,
+    //     data : {
+    //         title : $("#id_title").val(),
+    //         content : $("#id_content").val(),
+    //         imgURL: imageURL,
+    //         mood: $("#id_mood").val()
+    //     },
+    //     success : function(result){
+    //         console.log(result)
+    //         console.log(imageURL)
+    //     },
+    //     error : function(request, status, error){
+    //         console.log(error)
+    //     }
+    // })
 }
 function listener(e){
     switch(e.type){
