@@ -11,6 +11,10 @@
   <p>{{ post_content }}</p>
 
   {% if post_writer == request.user %}
+    <form action="{% url 'diary:edit' pk=post_id %}" method="get">
+      {% csrf_token %}
+      <input type="submit" value="수정">
+    </form>
     <form action="{% url 'diary:delete' pk=post_id %}" method="post">
       {% csrf_token %}
       <input type="submit" value="삭제">

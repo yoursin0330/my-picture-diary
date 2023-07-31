@@ -103,15 +103,22 @@ class Delete(View):
 class Update(View):
     def get(self, request, pk):
         post = Post.objects.get(pk=pk)
-        form = PostForm(
-            initial={
-                'title': post.title,
-                'content': post.content,
-                'mood': post.mood
-            })
+        # form = PostForm(
+        #     initial={
+        #         'title': post.title,
+
+        #         'content': post.content,
+        #         'mood': post.mood
+        #     })
+        post_title = post.title
+        post_content = post.content
+        post_mood = post.mood
+        post_painting = post.painting
         context = {
-            'form': form,
-            'post': post,
+            'post_title': post_title,
+            'post_content': post_content,
+            'post_mood': post_mood,
+            'post_painting': post_painting,
             'title': (str)(post.date) + '의 일기'
         }
         return render(request, 'diary/post_edit.html', context)
@@ -126,12 +133,13 @@ class Update(View):
 
             post.save()
             return redirect('diary:detail', pk=pk)
-        form.add_error('입력이 유효하지 않습니다.')
-        context = {
-            'form': form,
-            'title': '일기'
-        }
-        return render(request, 'diary/post_edit.html', context)
+        return redirect('diary:list')
+        # form.add_error('입력이 유효하지 않습니다.')
+        # context = {
+        #     'form': form,
+        #     'title': '일기'
+        # }
+        # return render(request, 'diary/post_edit.html', context)
 
 
 # Comment

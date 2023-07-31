@@ -6,9 +6,9 @@ urlpatterns = [
     # user/
 
     # 회원가입
-    path("register/",views.Registeration.as_view(), name='register'),
+    path("register/", views.Registeration.as_view(), name='register'),
     # 로그인
-    path("login/",views.Login.as_view(), name='login'),
+    path("login/", views.Login.as_view(), name='login'),
     # 로그아웃
     path("logout/", views.Logout.as_view(), name='logout'),
 ]
