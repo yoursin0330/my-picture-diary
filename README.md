@@ -45,7 +45,7 @@
 
 ![인덱스 화면](readme/index.png)
 ![회원가입](readme/user_register.png)
-![로그인](readme/user_login.png.png)
+![로그인](readme/user_login.png)
 ![일기 리스트](readme/blog_list.png)
 ![게시글 상세 페이지](readme/blog_detail.png)
 ![게시물 작성](readme/blog_write.png)
