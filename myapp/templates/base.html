@@ -20,6 +20,7 @@
       {% if user.is_authenticated %}
         <p>Welcome,
           {{ user.email }}</p>
+        <a href="{% url 'diary:list' %}" class="btn">Home</a>
         <a href="{% url 'user:logout' %}" class="btn">Logout</a>
       {% else %}
         <p>Please, Login</p>

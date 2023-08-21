@@ -7,8 +7,8 @@
     {{ post_writer }}</p>
   <p>기분 :
     {{ post_mood }}</p>
-  <img src="{{ post_painting }}" alt="그림">
   <p>{{ post_content }}</p>
+  <img src="{{ post_painting }}" alt="그림">
 
   {% if post_writer == request.user %}
     <form action="{% url 'diary:delete' pk=post_id %}" method="post">

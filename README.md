@@ -7,12 +7,12 @@
 - 개발 환경
   Django 4.2.3, HTML, CSS, JavaScript
 - 개발 기간
-  2023/07/17 ~ 2023/07/20
+  2023/07/17 ~ 2023/07/20, 08/21
 
 ## 기능
 
 - User : 회원가입, 로그인, 로그아웃
-- Post : 게시글 CRUD. 일기의 그림 작성, 수정
+- Post : 게시글 CRUD. 일기의 그림 작성
 - Comment : 댓글 작성, 삭제
 
 ## DB 구조
@@ -29,7 +29,6 @@
 - 'diary/write/' : 일기 작성
 - 'diary/detail/<int:pk>/' : 일기 조회
 - 'diary/detail/<int:pk>/delete/' : 일기 삭제
-- 'diary/detail/<int:pk>/edit/' : 일기 수정
 
 ### 일기 댓글
 
@@ -44,16 +43,14 @@
 
 ## 실행 화면
 
-![인덱스 화면](image-3.png)
-![회원가입](image-4.png)
-![로그인](image-5.png)
-![일기 리스트](image-1.png)
-![게시글 상세 페이지](image-2.png)
-![게시물 작성](image-6.png)
-![게시물 작성 텍스트](https://github.com/yoursin0330/my-picture-diary/assets/103302201/ac518023-308b-4a79-affa-392a9398109c)
+![인덱스 화면](readme/index.png)
+![회원가입](readme/user_register.png)
+![로그인](readme/user_login.png.png)
+![일기 리스트](readme/blog_list.png)
+![게시글 상세 페이지](readme/blog_detail.png)
+![게시물 작성](readme/blog_write.png)
 
 ## 아쉬웠던 점
 
-- canvas 저장 부분을 해결해보려고 하다 시간이 너무 많이 지나 에러를 잡지 못한점
-- css를 전혀 하지 못해 화면이 깔끔하지 못한 점
-- 그림을 정상적으로 저장, 수정하지 못한 점
+- canvas 저장 부분에 시간 할애를 많이 해 효율적으로 시간을 분배하지 못한 점
+- 구상 당시의 디자인을 적용하지 못한 점
